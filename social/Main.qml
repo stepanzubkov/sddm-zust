@@ -1,0 +1,91 @@
+import QtQuick 2.2
+import QtQuick.Controls 2.2
+
+Rectangle {
+    id: root
+    width: 640
+    height: 480
+
+    readonly property int vMargin: 40
+    readonly property int hMargin: 30
+    readonly property color textColor: "#ffffff"
+
+    Item {
+        id: mainFrame
+        property variant geometry: screenModel.geometry(screenModel.primary)
+        x: geometry.x; y: geometry.y; width: geometry.width; height: geometry.height
+
+        Image {
+            anchors.fill: parent
+            source: "background.png"
+        }
+
+        Item {
+            id: timeArea
+            width: timeText.width + dateText.width + hMargin
+            height: parent.height/5
+            anchors {
+                top: parent.top
+                horizontalCenter: parent.horizontalCenter
+            }
+
+            Text {
+                id: timeText
+                color: textColor
+                font.pixelSize: 66
+                anchors {
+                    top: parent.top
+                    topMargin: vMargin
+                }
+                function updateTime() {
+                    text = new Date().toLocaleString(Qt.locale("en_US"), "hh:mm")
+                }
+            }
+            Text {
+                id: dateText
+                color: textColor
+                font.pixelSize: 48
+                anchors {
+                    top: parent.top
+                    topMargin: vMargin + 18
+                    left: timeText.right
+                    leftMargin: hMargin
+                }
+                function updateDate() {
+                    text = new Date().toLocaleString(Qt.locale("en_US"), "dd MMMM, dddd")
+                }
+            }
+
+            Timer {
+                interval: 1000
+                repeat: true
+                running: true
+                onTriggered: {
+                    timeText.updateTime()
+                    dateText.updateDate()
+                }
+            }
+            // Do time and date updating when timeArea is displayed
+            Component.onCompleted: {
+                timeText.updateTime()
+                dateText.updateDate()
+            }
+        }
+
+        LoginFrame {
+            id: loginFrame
+            width: parent.width/3
+            height: parent.height/3
+            anchors {
+                centerIn: parent
+            }
+            Rectangle {
+                z: -1
+                anchors.fill: parent
+                radius: 8
+                color: Qt.rgba(0.55, 0.55, 0.55, 0.85)
+            }
+        }
+    }
+
+}

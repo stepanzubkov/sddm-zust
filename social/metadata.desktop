@@ -1,0 +1,10 @@
+[SddmGreeterTheme]
+Name=Social
+Description=Social theme.
+License=MIT
+Version=0.0.1
+MainScript=Main.qml
+ConfigFile=theme.conf
+TranslationsDirectory=translations
+Theme-Id=social-network
+Theme-API=2.2

@@ -1,6 +1,8 @@
 [SddmGreeterTheme]
 Name=Zust
 Description=Clean and simple theme with no frills.
+Author=stepan-zubkov
+Copyright=(c) 2022, stepan-zubkov
 License=MIT
 Version=0.0.2
 MainScript=Main.qml

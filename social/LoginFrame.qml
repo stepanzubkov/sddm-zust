@@ -1,8 +1,8 @@
 import QtQuick 2.2
 import QtQuick.Controls 2.2
 import QtGraphicalEffects 1.12
-//import SddmComponents 2.0
 
+//import SddmComponents 2.0
 Item {
     id: root
 
@@ -10,178 +10,195 @@ Item {
     property string currentIconPath: usersList.currentItem.iconPath
     property string currentUserName: usersList.currentItem.userName
 
+    ComboBox {
+        id: usersList
 
-    Rectangle {
-        width: parent.width
-        height: parent.height
-        color: "transparent"
-        ListView {
-            id: usersList
-            visible: false
-            z: 2
-            anchors {
-                top: userNameText.bottom
-                left: userNameText.left
-                topMargin: 50
-            }
-
-            model: userModel
-            delegate: Rectangle {
-                id: userItem
-                color: "transparent"
-
-                width: userNameText.width*2
-                height: 50
-
-
-                function select() {
-                    usersList.currentIndex = index
-                    currentIconPath = icon
-                    currentUserName = name
-                }
-                Component.onCompleted: {
-                    if (name === userModel.lastUser) {
-                        userItem.select()
-                    }
-                    userItem.select()
-                }
-
-                Text {
-                    id: userItemText
-                    anchors {
-                        left: parent.left
-                        leftMargin: 10
-                        verticalCenter: parent.verticalCenter
-                    }
-                    text: model.name
-                    font.pixelSize: 30
-                }
-                Rectangle {
-                    anchors.fill: parent
-                    z: -1
-                }
-                MouseArea {
-                    anchors.fill: parent
-                    onClicked: {
-                        userItem.select();
-                        usersList.visible = false;
-                    }
-                }
-
-            }
+        width: parent.width / 3
+        anchors {
+            verticalCenter: userIcon.verticalCenter
+            left: userIcon.right
+            leftMargin: hMargin
         }
-        Image {
-            id: userIcon
-            property bool rounded: true
-            property bool adapt: true
+        model: userModel
 
-            anchors {
-                top: parent.top
-                left: parent.left
-                topMargin: 20
-                leftMargin: 20
+        delegate: ItemDelegate {
+            width: parent.width
+            contentItem: Text {
+                text: model.name
+                font.pixelSize: 20
+                font.capitalization: Font.Capitalize
+                verticalAlignment: Text.AlignVCenter
+                horizontalAlignment: Text.AlignHCenter
             }
-            width: 80
-            height: 80
-            source: root.currentIconPath
+            highlighted: parent.highlightedIndex === index
+            background: Rectangle {
+                color: usersList.highlightedIndex === index ? "#555555" : "white"
+            }
 
-            layer.enabled: rounded
-            layer.effect: OpacityMask {
-                maskSource: Item {
-                    width: userIcon.width
-                    height: userIcon.height
-                    Rectangle {
-                        anchors.centerIn: parent
-                        width: userIcon.adapt ? userIcon.width : Math.min(
-                                                    userIcon.width,
-                                                    userIcon.height)
-                        height: userIcon.adapt ? userIcon.height : width
-                        radius: Math.min(width, height)
-                    }
-                }
+            function select() {
+                usersList.currentIndex = index
+                userNameText.text = model.name
+                currentIconPath = model.icon
+                currentUserName = model.name
+                console.log(name)
             }
-            Rectangle {
-                anchors.fill: parent
-                color: "transparent"
-                radius: parent.width / 2
-                border.color: "white"
-                border.width: 2
-            }
-        }
-        Text {
-            id: userNameText
-            text: root.currentUserName
-            color: textColor
-            font.pixelSize: 34
-            anchors {
-                verticalCenter: userIcon.verticalCenter
-                left: userIcon.right
-                leftMargin: hMargin
-            }
-            MouseArea {
-                anchors.fill: parent
-                onClicked: {
-                    usersList.visible = usersList.visible ? false: true;
+
+            onClicked: select()
+            Component.onCompleted: {
+                if (name == userName) {
+                    select()
                 }
             }
         }
-        Rectangle {
-            id: passwdInputZone
-            width: root.width * 0.8
-            height: 32
-            radius: 4
+        background: Rectangle {
+            color: "transparent"
+            border.color: "transparent"
+        }
+        indicator: Canvas {
+            id: canvas
+
             anchors {
-                centerIn: parent
-                horizontalCenter: parent.horizontalCenter
+                right: parent.right
                 verticalCenter: parent.verticalCenter
             }
-            border.color: "#555555"
-            border.width: 1.5
-            color: "#ffffff"
+            width: 12
+            height: 8
+            contextType: "2d"
 
-            TextInput {
-                id: passwdInput
-                anchors {
-                    fill: parent
-                    leftMargin: 8
-                    rightMargin: 20
+            Connections {
+                target: usersList
+                function onPressedChanged() {
+                    canvas.requestPaint()
                 }
-                font.pixelSize: 16
-                clip: true
-                echoMode: TextInput.Password
-                verticalAlignment: TextInput.AlignVCenter
-                onAccepted: {
-                    sddm.login(userNameText.text, passwdInput.text, sessionModel.lastIndex)
-                }
-                Timer {
-                    interval: 200
-                    running: true
-                    onTriggered: passwdInput.forceActiveFocus()
-                }
+            }
 
+            onPaint: {
+                context.reset()
+                context.moveTo(0, 0)
+                context.lineTo(width, 0)
+                context.lineTo(width / 2, height)
+                context.closePath()
+                context.fillStyle = usersList.pressed ? "#555555" : textColor
+                context.fill()
+            }
+        }
+        contentItem: Text {
+            id: userNameText
+
+            text: userName
+            color: textColor
+            font.pixelSize: 20
+            font.bold: true
+            font.capitalization: Font.Capitalize
+        }
+    }
+
+    // TODO: Take to a separate component
+    Image {
+        id: userIcon
+
+        property bool rounded: true
+        property bool adapt: true
+
+        anchors {
+            top: parent.top
+            left: parent.left
+            topMargin: 20
+            leftMargin: 20
+        }
+        width: 80
+        height: 80
+        source: root.currentIconPath
+
+        layer.enabled: rounded
+        layer.effect: OpacityMask {
+            maskSource: Item {
+                width: userIcon.width
+                height: userIcon.height
+                Rectangle {
+                    anchors.centerIn: parent
+                    width: userIcon.adapt ? userIcon.width : Math.min(
+                                                userIcon.width, userIcon.height)
+                    height: userIcon.adapt ? userIcon.height : width
+                    radius: Math.min(width, height)
+                }
             }
         }
         Rectangle {
-            id: loginButton
-            color: "#f09745"
-            width: root.width/2
-            height: 40
-            radius: 4
+            anchors.fill: parent
+            color: "transparent"
+            radius: parent.width / 2
+            border.color: "white"
+            border.width: 2
+        }
+    }
+
+    Rectangle {
+        id: passwdInputZone
+
+        width: root.width * 0.8
+        height: 32
+        radius: 4
+        anchors {
+            centerIn: parent
+            horizontalCenter: parent.horizontalCenter
+            verticalCenter: parent.verticalCenter
+        }
+        border.color: "#e38131"
+        border.width: 1.5
+
+        TextInput {
+            id: passwdInput
+
             anchors {
-                top: passwdInputZone.bottom
-                topMargin: vMargin
-                horizontalCenter: passwdInputZone.horizontalCenter
+                fill: parent
+                leftMargin: 8
+                rightMargin: 20
             }
-            Text {
-                text: "Log in"
-                anchors.centerIn: parent
+            font.pixelSize: 16
+            clip: true
+            echoMode: TextInput.Password
+            verticalAlignment: TextInput.AlignVCenter
+            onAccepted: {
+                sddm.login(userNameText.text, passwdInput.text,
+                           sessionModel.lastIndex)
             }
-            MouseArea {
-                anchors.fill: parent
-                hoverEnabled: true
-                onClicked: {
-                    sddm.login(userNameText.text, passwdInput.text, sessionModel.lastIndex)
-                }
+            Timer {
+                interval: 200
+                running: true
+                onTriggered: passwdInput.forceActiveFocus()
+            }
+        }
+    }
+    // TODO: Take to a separate component
+    Rectangle {
+        id: loginButton
+
+        color: loginButtonClickArea.pressed ? "#e38131" : "#f09745"
+        width: root.width / 2
+        height: 40
+        border.color: "#e38131"
+        border.width: 2
+        radius: 4
+        anchors {
+            top: passwdInputZone.bottom
+            topMargin: vMargin
+            horizontalCenter: passwdInputZone.horizontalCenter
+        }
+        Text {
+            text: "Log in"
+            color: textColor
+            font.pixelSize: 16
+            font.bold: true
+            anchors.centerIn: parent
+        }
+        MouseArea {
+            id: loginButtonClickArea
+            anchors.fill: parent
+            hoverEnabled: true
+            onClicked: {
+                sddm.login(userNameText.text, passwdInput.text,
+                           sessionModel.lastIndex)
             }
         }
     }

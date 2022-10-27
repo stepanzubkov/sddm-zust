@@ -1,5 +1,6 @@
 import QtQuick 2.2
 import QtQuick.Controls 2.2
+import QtGraphicalEffects 1.12
 
 Rectangle {
     id: root
@@ -13,17 +14,21 @@ Rectangle {
     Item {
         id: mainFrame
         property variant geometry: screenModel.geometry(screenModel.primary)
-        x: geometry.x; y: geometry.y; width: geometry.width; height: geometry.height
+        x: geometry.x
+        y: geometry.y
+        width: geometry.width
+        height: geometry.height
 
         Image {
+            id: backgroundImage
             anchors.fill: parent
-            source: "background.png"
+            source: "background.jpg"
         }
 
         Item {
             id: timeArea
             width: timeText.width + dateText.width + hMargin
-            height: parent.height/5
+            height: parent.height / 5
             anchors {
                 top: parent.top
                 horizontalCenter: parent.horizontalCenter
@@ -38,7 +43,8 @@ Rectangle {
                     topMargin: vMargin
                 }
                 function updateTime() {
-                    text = new Date().toLocaleString(Qt.locale("en_US"), "hh:mm")
+                    text = new Date().toLocaleString(Qt.locale("en_US"),
+                                                     "hh:mm")
                 }
             }
             Text {
@@ -52,7 +58,8 @@ Rectangle {
                     leftMargin: hMargin
                 }
                 function updateDate() {
-                    text = new Date().toLocaleString(Qt.locale("en_US"), "dd MMMM, dddd")
+                    text = new Date().toLocaleString(Qt.locale("en_US"),
+                                                     "dd MMMM, dddd")
                 }
             }
 
@@ -74,18 +81,31 @@ Rectangle {
 
         LoginFrame {
             id: loginFrame
-            width: parent.width/3
-            height: parent.height/3
+            width: parent.width / 3
+            height: parent.height / 3
             anchors {
                 centerIn: parent
             }
             Rectangle {
+                id: loginFrameBackground
                 z: -1
                 anchors.fill: parent
                 radius: 8
-                color: Qt.rgba(0.55, 0.55, 0.55, 0.85)
+                border.color: "#555555"
+                color: Qt.rgba(0.55, 0.55, 0.55, 0.6)
+            }
+            FastBlur {
+                id: fastBlur
+                z: -2
+                anchors.fill: loginFrameBackground
+                source: ShaderEffectSource {
+                    sourceItem: backgroundImage
+
+                    sourceRect: Qt.rect(fastBlur.width, fastBlur.height,
+                                        fastBlur.width, fastBlur.height)
+                }
+                radius: 20
             }
         }
     }
-
 }

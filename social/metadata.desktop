@@ -1,10 +1,10 @@
 [SddmGreeterTheme]
-Name=Social
-Description=Social theme.
+Name=Zust
+Description=Clean and simple theme with no frills.
 License=MIT
-Version=0.0.1
+Version=0.0.2
 MainScript=Main.qml
 ConfigFile=theme.conf
 TranslationsDirectory=translations
-Theme-Id=social-network
+Theme-Id=zust-theme
 Theme-API=2.2

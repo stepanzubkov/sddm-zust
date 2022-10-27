@@ -91,8 +91,9 @@ Rectangle {
                 z: -1
                 anchors.fill: parent
                 radius: 8
-                border.color: "#555555"
-                color: Qt.rgba(0.55, 0.55, 0.55, 0.6)
+                border.color: "#ffffff"
+                //color: Qt.rgba(0.55, 0.55, 0.55, 0.6)
+                color: "#7fffffff"
             }
             FastBlur {
                 id: fastBlur
@@ -104,7 +105,7 @@ Rectangle {
                     sourceRect: Qt.rect(fastBlur.width, fastBlur.height,
                                         fastBlur.width, fastBlur.height)
                 }
-                radius: 20
+                radius: 32
             }
         }
     }

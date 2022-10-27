@@ -6,9 +6,12 @@ import QtGraphicalEffects 1.12
 Item {
     id: root
 
-    property string userName: userModel.lastUser
-    property string currentIconPath: usersList.currentItem.iconPath
-    property string currentUserName: usersList.currentItem.userName
+    property string currentIconPath: userModel.data(userModel.index(
+                                                        userModel.count - 1,
+                                                        0), Qt.UserRole + 4)
+    property string currentUserName: userModel.data(userModel.index(
+                                                        userModel.count - 1,
+                                                        0), Qt.UserRole + 1)
 
     ComboBox {
         id: usersList
@@ -30,7 +33,7 @@ Item {
                 verticalAlignment: Text.AlignVCenter
                 horizontalAlignment: Text.AlignHCenter
             }
-            highlighted: parent.highlightedIndex === index
+            highlighted: usersList.highlightedIndex === index
             background: Rectangle {
                 color: usersList.highlightedIndex === index ? "#555555" : "white"
             }
@@ -40,15 +43,9 @@ Item {
                 userNameText.text = model.name
                 currentIconPath = model.icon
                 currentUserName = model.name
-                console.log(name)
             }
 
             onClicked: select()
-            Component.onCompleted: {
-                if (name == userName) {
-                    select()
-                }
-            }
         }
         background: Rectangle {
             color: "transparent"
@@ -78,18 +75,31 @@ Item {
                 context.lineTo(width, 0)
                 context.lineTo(width / 2, height)
                 context.closePath()
-                context.fillStyle = usersList.pressed ? "#555555" : textColor
+                context.fillStyle = usersList.pressed ? "#555555" : "#222222"
                 context.fill()
             }
         }
         contentItem: Text {
             id: userNameText
 
-            text: userName
-            color: textColor
+            text: currentUserName
+            //color: textColor
+            color: "#222222"
             font.pixelSize: 20
             font.bold: true
             font.capitalization: Font.Capitalize
+        }
+        Component.onCompleted: {
+            for (var i = 0; i < userModel.count; i++) {
+                var this_username = userModel.data(userModel.index(i, 0),
+                                                   Qt.UserRole + 1)
+                if (this_username === userModel.lastUser) {
+                    currentIndex = +userModel.index(i, 0)
+                    currentUserName = this_username
+                    currentIconPath = userModel.data(userModel.index(i, 0),
+                                                     Qt.UserRole + 4)
+                }
+            }
         }
     }
 
@@ -128,7 +138,7 @@ Item {
             anchors.fill: parent
             color: "transparent"
             radius: parent.width / 2
-            border.color: "white"
+            border.color: "#222222"
             border.width: 2
         }
     }

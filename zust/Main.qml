@@ -1,6 +1,7 @@
 import QtQuick 2.2
 import QtQuick.Controls 2.2
 import QtGraphicalEffects 1.12
+import SddmComponents 2.0
 
 Rectangle {
     id: root
@@ -22,9 +23,8 @@ Rectangle {
         Image {
             id: backgroundImage
             anchors.fill: parent
-            source: "background.jpg"
+            source: config.background
         }
-
         Item {
             id: timeArea
             width: timeText.width + dateText.width + hMargin

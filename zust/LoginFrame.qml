@@ -2,7 +2,6 @@ import QtQuick 2.2
 import QtQuick.Controls 2.2
 import QtGraphicalEffects 1.12
 
-//import SddmComponents 2.0
 Item {
     id: root
 
@@ -15,6 +14,15 @@ Item {
 
     ComboBox {
         id: usersList
+
+        function rotateArrow() {
+            if (userArrow.clickCount == 0) {
+                userArrow.clickCount++
+            } else {
+                userArrow.rotation = userArrow.rotation ? 0 : 180
+                userArrow.clickCount = 0
+            }
+        }
 
         width: parent.width / 3
         anchors {
@@ -46,39 +54,40 @@ Item {
             }
 
             onClicked: select()
+            onPressedChanged: usersList.rotateArrow()
         }
         background: Rectangle {
             color: "transparent"
             border.color: "transparent"
         }
-        indicator: Canvas {
-            id: canvas
+        indicator: Image {
+            id: userArrow
+            property int clickCount: 0
 
             anchors {
-                right: parent.right
+                right: userNameText.right
                 verticalCenter: parent.verticalCenter
             }
-            width: 12
-            height: 8
-            contextType: "2d"
+
+            sourceSize.width: 12
+            sourceSize.height: 12
+            source: "icons/arrow-down.png"
+            rotation: 0
+
+            Behavior on rotation {
+                RotationAnimation {
+                    duration: 200
+                }
+            }
 
             Connections {
                 target: usersList
                 function onPressedChanged() {
-                    canvas.requestPaint()
+                    usersList.rotateArrow()
                 }
             }
-
-            onPaint: {
-                context.reset()
-                context.moveTo(0, 0)
-                context.lineTo(width, 0)
-                context.lineTo(width / 2, height)
-                context.closePath()
-                context.fillStyle = usersList.pressed ? "#555555" : "#222222"
-                context.fill()
-            }
         }
+
         contentItem: Text {
             id: userNameText
 
@@ -138,7 +147,7 @@ Item {
             anchors.fill: parent
             color: "transparent"
             radius: parent.width / 2
-            border.color: "#222222"
+            border.color: "white"
             border.width: 2
         }
     }

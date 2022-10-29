@@ -92,7 +92,6 @@ Rectangle {
                 anchors.fill: parent
                 radius: 8
                 border.color: "#ffffff"
-                //color: Qt.rgba(0.55, 0.55, 0.55, 0.6)
                 color: "#7fffffff"
             }
             FastBlur {
@@ -106,6 +105,18 @@ Rectangle {
                                         fastBlur.width, fastBlur.height)
                 }
                 radius: 32
+            }
+        }
+        SessionChoose {
+            id: sessionChoose
+
+            width: parent.width / 5
+            height: 40
+            anchors {
+                left: parent.left
+                bottom: parent.bottom
+                leftMargin: hMargin
+                bottomMargin: 10
             }
         }
     }

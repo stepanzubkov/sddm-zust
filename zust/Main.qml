@@ -119,5 +119,17 @@ Rectangle {
                 bottomMargin: 10
             }
         }
+        SystemButtons {
+            id: systemButtons
+
+            width: parent.width / 5
+            height: 40
+            anchors {
+                right: parent.right
+                bottom: parent.bottom
+                leftMargin: hMargin
+                bottomMargin: 10
+            }
+        }
     }
 }

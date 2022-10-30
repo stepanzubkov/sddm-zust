@@ -182,6 +182,7 @@ Item {
                 sddm.login(userNameText.text, passwdInput.text,
                            sessionModel.lastIndex)
             }
+
             Timer {
                 interval: 200
                 running: true

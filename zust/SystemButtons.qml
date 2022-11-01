@@ -6,7 +6,7 @@ Item {
     RowLayout {
         anchors.fill: parent
         ImgButton {
-            //visible: sddm.canReboot
+            visible: sddm.canReboot
             TextCaption {
                 id: rebootCaption
                 visible: false
@@ -18,7 +18,7 @@ Item {
             onExited: rebootCaption.visible = false
         }
         ImgButton {
-            //visible: sddm.canPowerOff
+            visible: sddm.canPowerOff
             TextCaption {
                 id: powerOffCaption
                 visible: false
@@ -30,7 +30,7 @@ Item {
             onExited: powerOffCaption.visible = false
         }
         ImgButton {
-            //visible: sddm.canSuspend
+            visible: sddm.canSuspend
             TextCaption {
                 id: suspendCaption
                 visible: false

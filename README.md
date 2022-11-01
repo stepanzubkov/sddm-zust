@@ -39,3 +39,4 @@ Contributions are welcome! Create Issues and PRs
 [![Stargazers repo roster for @Stepan-Zubkov/sddm-zust](https://reporoster.com/stars/Stepan-Zubkov/sddm-zust)](https://github.com/Stepan-Zubkov/sddm-zust/stargazers)
 
 [![Forkers repo roster for @Stepan-Zubkov/sddm-zust](https://reporoster.com/forks/Stepan-Zubkov/sddm-zust)](https://github.com/Stepan-Zubkov/sddm-zust/network/members)
+

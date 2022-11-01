@@ -9,7 +9,7 @@ Clear and concise SDDM login theme with no frills written only in QML.
 # Installation
 
 ## From KDE store
-(TODO: Upload to KDE store)
+You can find product page on [pling](https://www.pling.com/p/1931238/)
 ### On KDE
 1. Open System settings
 2. Choose Start and finish/Log in (SDDM)
@@ -20,7 +20,7 @@ Clear and concise SDDM login theme with no frills written only in QML.
 
 
 ### On other DEs/WMs
-1. Open link
+1. Open [link](https://www.pling.com/p/1931238/)
 2. Click on "Install"
 3. Unzip downloaded archive
 4. Copy given folder to /usr/share/sddm/themes (`sudo cp -r zust /usr/share/sddm/themes`)

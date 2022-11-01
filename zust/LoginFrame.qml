@@ -12,6 +12,21 @@ Item {
                                                         userModel.count - 1,
                                                         0), Qt.UserRole + 1)
 
+    Connections {
+        target: sddm
+        onLoginSucceeded: {
+            loginLoading.visible = false
+            loginLoadingAnimation.complete()
+            Qt.quit()
+        }
+        onLoginFailed: {
+            loginLoading.visible = false
+            loginLoadingAnimation.complete()
+            loginError.visible = true
+            passwdInput.text = ""
+        }
+    }
+
     ComboBox {
         id: usersList
 
@@ -92,7 +107,6 @@ Item {
             id: userNameText
 
             text: currentUserName
-            //color: textColor
             color: "#222222"
             font.pixelSize: 20
             font.bold: true
@@ -152,6 +166,45 @@ Item {
         }
     }
 
+    Image {
+        id: loginLoading
+
+        visible: false
+        anchors {
+            bottom: passwdInputZone.top
+            bottomMargin: 7
+            horizontalCenter: passwdInputZone.horizontalCenter
+        }
+        source: "icons/login-loading.png"
+        sourceSize.width: 32
+        sourceSize.height: 32
+        RotationAnimation {
+            id: loginLoadingAnimation
+            target: loginLoading
+            properties: "rotation"
+            from: 0
+            to: 360
+            duration: 2000
+            loops: Animation.Infinite
+        }
+    }
+
+    Text {
+        id: loginError
+
+        visible: false
+        anchors {
+            bottom: passwdInputZone.top
+            bottomMargin: 7
+            horizontalCenter: passwdInputZone.horizontalCenter
+        }
+
+        text: "Incorrect password"
+        font.italic: true
+        font.pixelSize: 18
+        color: "red"
+    }
+
     Rectangle {
         id: passwdInputZone
 
@@ -180,8 +233,12 @@ Item {
             verticalAlignment: TextInput.AlignVCenter
             onAccepted: {
                 sddm.login(userNameText.text, passwdInput.text,
-                           sessionModel.lastIndex)
+                           sessionChoose.currentSessionIndex)
+                loginError.visible = false
+                loginLoading.visible = true
+                loginLoadingAnimation.start()
             }
+
             Timer {
                 interval: 200
                 running: true
@@ -217,7 +274,10 @@ Item {
             hoverEnabled: true
             onClicked: {
                 sddm.login(userNameText.text, passwdInput.text,
-                           sessionModel.lastIndex)
+                           sessionChoose.currentSessionIndex)
+                loginError.visible = false
+                loginLoading.visible = true
+                loginLoadingAnimation.start()
             }
         }
     }

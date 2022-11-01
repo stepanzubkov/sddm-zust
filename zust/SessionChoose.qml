@@ -8,6 +8,7 @@ Item {
                                         sessionModel.index(
                                             sessionsList.currentIndex, 0),
                                         Qt.UserRole + 4)
+    property int currentSessionIndex: sessionsList.currentIndex
 
     ComboBox {
         id: sessionsList

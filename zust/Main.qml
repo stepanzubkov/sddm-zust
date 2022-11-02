@@ -42,6 +42,14 @@ Rectangle {
                     top: parent.top
                     topMargin: vMargin
                 }
+                layer.enabled: true
+                layer.effect: DropShadow {
+                    verticalOffset: 3
+                    horizontalOffset: 2
+                    color: "#80000000"
+                    radius: 1
+                    samples: 3
+                }
                 function updateTime() {
                     text = new Date().toLocaleString(Qt.locale("en_US"),
                                                      "hh:mm")
@@ -56,6 +64,14 @@ Rectangle {
                     topMargin: vMargin + 18
                     left: timeText.right
                     leftMargin: hMargin
+                }
+                layer.enabled: true
+                layer.effect: DropShadow {
+                    verticalOffset: 3
+                    horizontalOffset: 2
+                    color: "#80000000"
+                    radius: 1
+                    samples: 3
                 }
                 function updateDate() {
                     text = new Date().toLocaleString(Qt.locale("en_US"),

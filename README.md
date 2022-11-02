@@ -4,7 +4,7 @@ Clear and concise SDDM login theme with no frills written only in QML.
 
 *Take a look*
 
-![screenshot](https://user-images.githubusercontent.com/83695097/198879650-fe6df8b9-c56a-4eee-9666-2fda9d1f8f7e.png)
+![Screenshot_20221102_115602](https://user-images.githubusercontent.com/83695097/199449253-0158790e-2fcf-414a-919a-03bbae388ef8.png)
 
 # Installation
 

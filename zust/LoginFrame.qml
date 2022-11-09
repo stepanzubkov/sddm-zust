@@ -126,43 +126,16 @@ Item {
         }
     }
 
-    // TODO: Take to a separate component
-    Image {
+    UserAvatar {
         id: userIcon
 
-        property bool rounded: true
-        property bool adapt: true
+        source: currentIconPath
 
         anchors {
             top: parent.top
             left: parent.left
             topMargin: 20
             leftMargin: 20
-        }
-        width: 80
-        height: 80
-        source: root.currentIconPath
-
-        layer.enabled: rounded
-        layer.effect: OpacityMask {
-            maskSource: Item {
-                width: userIcon.width
-                height: userIcon.height
-                Rectangle {
-                    anchors.centerIn: parent
-                    width: userIcon.adapt ? userIcon.width : Math.min(
-                                                userIcon.width, userIcon.height)
-                    height: userIcon.adapt ? userIcon.height : width
-                    radius: Math.min(width, height)
-                }
-            }
-        }
-        Rectangle {
-            anchors.fill: parent
-            color: "transparent"
-            radius: parent.width / 2
-            border.color: "white"
-            border.width: 2
         }
     }
 

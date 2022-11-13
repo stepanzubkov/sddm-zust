@@ -219,7 +219,6 @@ Item {
             }
         }
     }
-    // TODO: Take to a separate component
     Rectangle {
         id: loginButton
 

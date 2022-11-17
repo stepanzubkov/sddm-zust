@@ -39,7 +39,6 @@ Item {
             }
         }
 
-        width: parent.width / 3
         anchors {
             verticalCenter: userIcon.verticalCenter
             left: userIcon.right
@@ -80,7 +79,8 @@ Item {
             property int clickCount: 0
 
             anchors {
-                right: userNameText.right
+                left: userNameText.right
+                leftMargin: 10
                 verticalCenter: parent.verticalCenter
             }
 
@@ -112,6 +112,7 @@ Item {
             font.bold: true
             font.capitalization: Font.Capitalize
         }
+        popup.width: 200
         Component.onCompleted: {
             for (var i = 0; i < userModel.count; i++) {
                 var this_username = userModel.data(userModel.index(i, 0),

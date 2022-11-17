@@ -22,7 +22,7 @@ Item {
             }
         }
 
-        anchors.fill: parent
+        //anchors.fill: parent
 
         model: sessionModel
         currentIndex: sessionModel.lastIndex
@@ -46,6 +46,7 @@ Item {
             color: "transparent"
             border.color: "transparent"
         }
+        popup.width: 300
 
         contentItem: Text {
             id: sessionText
@@ -64,7 +65,8 @@ Item {
             property int clickCount: 0
 
             anchors {
-                right: sessionText.right
+                left: sessionText.right
+                leftMargin: 10
                 verticalCenter: parent.verticalCenter
             }
 

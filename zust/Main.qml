@@ -126,7 +126,7 @@ Rectangle {
         SessionChoose {
             id: sessionChoose
 
-            width: parent.width / 5
+            width: parent.width / 20
             height: 40
             anchors {
                 left: parent.left

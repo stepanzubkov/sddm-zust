@@ -17,9 +17,9 @@ Item {
         onLoginSucceeded: {
             loginLoading.visible = false
             loginLoadingAnimation.complete()
-            Qt.quit()
+            loginSuccess.visible = true
         }
-        onLoginFailed: {
+        onLoginFailed: { 
             loginLoading.visible = false
             loginLoadingAnimation.complete()
             loginError.visible = true
@@ -161,6 +161,22 @@ Item {
             duration: 2000
             loops: Animation.Infinite
         }
+    }
+
+    Text {
+        id: loginSuccess
+
+        visible: false
+        anchors {
+            bottom: passwdInputZone.top
+            bottomMargin: 7
+            horizontalCenter: passwdInputZone.horizontalCenter
+        }
+
+        text: `Welcome, ${currentUserName}`
+        font.italic: true
+        font.pixelSize: 18
+        color: "red"
     }
 
     Text {

@@ -1,4 +1,4 @@
-import QtQuick 2.2
+import QtQuick 2.6
 import QtQuick.Controls 2.2
 import QtGraphicalEffects 1.12
 
@@ -47,6 +47,8 @@ Item {
         model: userModel
 
         delegate: ItemDelegate {
+            id: usersDelegate
+
             width: parent.width
             contentItem: Text {
                 text: model.name
@@ -80,7 +82,6 @@ Item {
 
             anchors {
                 left: userNameText.right
-                leftMargin: 10
                 verticalCenter: parent.verticalCenter
             }
 
@@ -106,6 +107,7 @@ Item {
         contentItem: Text {
             id: userNameText
 
+            rightPadding: usersList.indicator.width
             text: currentUserName
             color: "#222222"
             font.pixelSize: 20

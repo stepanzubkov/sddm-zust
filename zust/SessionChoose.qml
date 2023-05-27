@@ -1,4 +1,4 @@
-import QtQuick 2.2
+import QtQuick 2.6
 import QtQuick.Controls 2.2
 
 Item {
@@ -22,7 +22,6 @@ Item {
             }
         }
 
-        //anchors.fill: parent
 
         model: sessionModel
         currentIndex: sessionModel.lastIndex
@@ -50,6 +49,7 @@ Item {
 
         contentItem: Text {
             id: sessionText
+            rightPadding: sessionsList.indicator.width
 
             verticalAlignment: Text.AlignVCenter
 
@@ -66,7 +66,6 @@ Item {
 
             anchors {
                 left: sessionText.right
-                leftMargin: 10
                 verticalCenter: parent.verticalCenter
             }
 
